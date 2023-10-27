@@ -1,7 +1,19 @@
 class Admin::ProductsController < ApplicationController
 
-  http_basic_authenticate_with name: ENV['Jungle'], password: ENV['Book']
-
+  # http_basic_authenticate_with name: ENV['Jungle'], password: ENV['Book']
+  def http_basic_authenticate_or_request_with
+    user = request.authorization&.username
+    password = request.authorization&.password
+  
+    if user && password
+      if User.exists?(username: user) && ActiveSupport::SecurityUtils.secure_compare(user.password, password)
+        return true
+      end
+    end
+  
+    request_http_basic_authentication
+  end
+  
   def index
     @products = Product.order(id: :desc).all
   end
