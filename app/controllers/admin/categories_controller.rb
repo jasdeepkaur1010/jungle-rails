@@ -1,6 +1,5 @@
 class Admin::CategoriesController < ApplicationController
 
-  # http_basic_authenticate_with name: ENV['USERNAME'], password: ENV['PASSWORD']
   def http_basic_authenticate_or_request_with
     user = request.authorization&.username
     password = request.authorization&.password
@@ -13,9 +12,6 @@ class Admin::CategoriesController < ApplicationController
     request_http_basic_authentication
   end
 
-  # def index
-  #   @categories = Category.order(id: :desc).all
-  # end
   def index
     @categories = Category.all
     render json: @categories
