@@ -1,6 +1,5 @@
 class Admin::ProductsController < ApplicationController
 
-  # http_basic_authenticate_with name: ENV['Jungle'], password: ENV['Book']
   def http_basic_authenticate_or_request_with
     user = request.authorization&.username
     password = request.authorization&.password
